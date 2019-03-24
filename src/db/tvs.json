@@ -1,0 +1,673 @@
+[
+  {
+    "displaySizeInInches": 140,
+    "displayType": "led",
+    "resolutionK": 4,
+    "outputs": [
+      "usb-micro",
+      "usb-a",
+      "analog",
+      "hdmi",
+      "coax"
+    ],
+    "name": "Philips ZEAX5",
+    "itemNo": "ZWETFPUG0Z"
+  },
+  {
+    "displaySizeInInches": 73,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "hdmi",
+      "usb-c"
+    ],
+    "name": "Panasonic 3F9JV",
+    "itemNo": "12FSR4ZLQY"
+  },
+  {
+    "displaySizeInInches": 148,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "hdmi",
+      "coax",
+      "thunderbolt",
+      "usb-a",
+      "usb-c"
+    ],
+    "name": "Xiaomi HVZ8Y",
+    "itemNo": "BFD0JXZ1XM"
+  },
+  {
+    "displaySizeInInches": 109,
+    "displayType": "plasma",
+    "resolutionK": 8,
+    "outputs": [
+      "hdmi",
+      "usb-a"
+    ],
+    "name": "Xiaomi IXHR7",
+    "itemNo": "1RPV5GNEVG"
+  },
+  {
+    "displaySizeInInches": 102,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "usb-micro",
+      "vga",
+      "usb-a",
+      "usb-c",
+      "jack"
+    ],
+    "name": "Philips L23HG",
+    "itemNo": "XB6WDKHZ2G"
+  },
+  {
+    "displaySizeInInches": 141,
+    "displayType": "plasma",
+    "resolutionK": 2,
+    "outputs": [
+      "usb-micro",
+      "usb-a",
+      "analog",
+      "thunderbolt",
+      "coax",
+      "usb-c"
+    ],
+    "name": "Xiaomi 1JIXT",
+    "itemNo": "61WO3C97GU"
+  },
+  {
+    "displaySizeInInches": 79,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "vga",
+      "hdmi",
+      "analog"
+    ],
+    "name": "JVC SHZC8",
+    "itemNo": "VRIPRKCHPP"
+  },
+  {
+    "displaySizeInInches": 104,
+    "displayType": "plasma",
+    "resolutionK": 8,
+    "outputs": [
+      "vga",
+      "jack",
+      "dvi",
+      "usb-micro",
+      "usb-c"
+    ],
+    "name": "Panasonic AXDNE",
+    "itemNo": "A7JZD3DY4Z"
+  },
+  {
+    "displaySizeInInches": 129,
+    "displayType": "led",
+    "resolutionK": 4,
+    "outputs": [
+      "dvi",
+      "coax",
+      "analog",
+      "vga",
+      "hdmi",
+      "thunderbolt"
+    ],
+    "name": "JVC 8DEOO",
+    "itemNo": "ZG8JMU5TSQ"
+  },
+  {
+    "displaySizeInInches": 54,
+    "displayType": "plasma",
+    "resolutionK": 8,
+    "outputs": [
+      "vga",
+      "analog",
+      "hdmi"
+    ],
+    "name": "Sony IIYUU",
+    "itemNo": "F5323X0Y83"
+  },
+  {
+    "displaySizeInInches": 85,
+    "displayType": "led",
+    "resolutionK": 2,
+    "outputs": [
+      "hdmi",
+      "vga",
+      "thunderbolt",
+      "usb-a",
+      "analog"
+    ],
+    "name": "JVC 83HZ9",
+    "itemNo": "CWCW22Y7MQ"
+  },
+  {
+    "displaySizeInInches": 134,
+    "displayType": "led",
+    "resolutionK": 8,
+    "outputs": [
+      "analog",
+      "hdmi",
+      "coax",
+      "jack"
+    ],
+    "name": "Sanyo 5QQFP",
+    "itemNo": "HBJ7IISVXM"
+  },
+  {
+    "displaySizeInInches": 123,
+    "displayType": "led",
+    "resolutionK": 2,
+    "outputs": [
+      "usb-micro"
+    ],
+    "name": "Panasonic W3H89",
+    "itemNo": "7GEIHMX6GS"
+  },
+  {
+    "displaySizeInInches": 71,
+    "displayType": "led",
+    "resolutionK": 2,
+    "outputs": [
+      "usb-c",
+      "coax",
+      "dvi",
+      "analog",
+      "usb-micro",
+      "vga"
+    ],
+    "name": "LG XT4Y6",
+    "itemNo": "NK85W9CUXB"
+  },
+  {
+    "displaySizeInInches": 98,
+    "displayType": "plasma",
+    "resolutionK": 2,
+    "outputs": [
+      "analog",
+      "jack",
+      "coax",
+      "usb-micro",
+      "dvi"
+    ],
+    "name": "Grundig Y70Q0",
+    "itemNo": "KEI36EDIZY"
+  },
+  {
+    "displaySizeInInches": 96,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "coax",
+      "hdmi",
+      "dvi"
+    ],
+    "name": "LG KOTVH",
+    "itemNo": "4SXAWKONHZ"
+  },
+  {
+    "displaySizeInInches": 135,
+    "displayType": "led",
+    "resolutionK": 8,
+    "outputs": [
+      "dvi",
+      "usb-micro",
+      "vga"
+    ],
+    "name": "Philips 32D3H",
+    "itemNo": "DDAJT5FKYI"
+  },
+  {
+    "displaySizeInInches": 127,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "coax",
+      "usb-a",
+      "usb-micro",
+      "jack"
+    ],
+    "name": "Samsung PQ242",
+    "itemNo": "6YMK1ZIMQC"
+  },
+  {
+    "displaySizeInInches": 98,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "thunderbolt",
+      "hdmi",
+      "usb-micro",
+      "usb-c",
+      "vga",
+      "dvi",
+      "coax",
+      "analog"
+    ],
+    "name": "Sanyo 2AR2P",
+    "itemNo": "9DW9HYC8GI"
+  },
+  {
+    "displaySizeInInches": 112,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "analog"
+    ],
+    "name": "LG 4EV8D",
+    "itemNo": "3FR0EG17I2"
+  },
+  {
+    "displaySizeInInches": 89,
+    "displayType": "plasma",
+    "resolutionK": 2,
+    "outputs": [
+      "thunderbolt",
+      "analog",
+      "usb-a",
+      "hdmi",
+      "usb-micro",
+      "usb-c"
+    ],
+    "name": "Xiaomi FUWFE",
+    "itemNo": "ACUTNTBZQC"
+  },
+  {
+    "displaySizeInInches": 53,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "analog",
+      "jack"
+    ],
+    "name": "Sony 0X57Q",
+    "itemNo": "9SWFUVWK9P"
+  },
+  {
+    "displaySizeInInches": 81,
+    "displayType": "led",
+    "resolutionK": 4,
+    "outputs": [
+      "jack",
+      "hdmi",
+      "thunderbolt",
+      "usb-a",
+      "analog",
+      "dvi",
+      "usb-micro"
+    ],
+    "name": "LG 3QDLP",
+    "itemNo": "6E11Q25D4D"
+  },
+  {
+    "displaySizeInInches": 122,
+    "displayType": "plasma",
+    "resolutionK": 4,
+    "outputs": [
+      "usb-c",
+      "usb-micro"
+    ],
+    "name": "Orion FWHMW",
+    "itemNo": "ZWCMNMUP78"
+  },
+  {
+    "displaySizeInInches": 70,
+    "displayType": "plasma",
+    "resolutionK": 8,
+    "outputs": [
+      "dvi",
+      "jack",
+      "vga",
+      "usb-micro",
+      "analog"
+    ],
+    "name": "Sanyo ZGXZY",
+    "itemNo": "ZLYXNBPNJU"
+  },
+  {
+    "displaySizeInInches": 81,
+    "displayType": "plasma",
+    "resolutionK": 2,
+    "outputs": [
+      "thunderbolt",
+      "dvi",
+      "jack",
+      "usb-c",
+      "vga",
+      "hdmi",
+      "analog",
+      "usb-a"
+    ],
+    "name": "Samsung IDS4L",
+    "itemNo": "F51ZRQX8I5"
+  },
+  {
+    "displaySizeInInches": 54,
+    "displayType": "plasma",
+    "resolutionK": 8,
+    "outputs": [
+      "hdmi",
+      "jack",
+      "thunderbolt",
+      "analog",
+      "dvi",
+      "coax"
+    ],
+    "name": "LG TMIJU",
+    "itemNo": "3K9HRVM1VJ"
+  },
+  {
+    "displaySizeInInches": 116,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "usb-a",
+      "analog",
+      "coax",
+      "vga",
+      "dvi"
+    ],
+    "name": "Grundig 22GUB",
+    "itemNo": "WKJUBQKJWI"
+  },
+  {
+    "displaySizeInInches": 136,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "hdmi",
+      "vga",
+      "usb-micro",
+      "coax",
+      "analog"
+    ],
+    "name": "Panasonic ILHWM",
+    "itemNo": "A3OZWHMGL1"
+  },
+  {
+    "displaySizeInInches": 70,
+    "displayType": "plasma",
+    "resolutionK": 4,
+    "outputs": [
+      "jack",
+      "hdmi",
+      "usb-a",
+      "vga",
+      "dvi",
+      "usb-micro",
+      "analog",
+      "coax"
+    ],
+    "name": "Sanyo Q31E8",
+    "itemNo": "LTOS61P7IY"
+  },
+  {
+    "displaySizeInInches": 73,
+    "displayType": "led",
+    "resolutionK": 8,
+    "outputs": [
+      "thunderbolt",
+      "vga",
+      "coax",
+      "usb-a",
+      "dvi",
+      "usb-c",
+      "usb-micro"
+    ],
+    "name": "Sony VZB85",
+    "itemNo": "TZQIP1VT17"
+  },
+  {
+    "displaySizeInInches": 127,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "usb-micro",
+      "hdmi",
+      "analog",
+      "thunderbolt",
+      "usb-a"
+    ],
+    "name": "JVC WZVKB",
+    "itemNo": "6I0O9VPIO7"
+  },
+  {
+    "displaySizeInInches": 76,
+    "displayType": "led",
+    "resolutionK": 4,
+    "outputs": [
+      "coax",
+      "usb-micro",
+      "usb-c",
+      "vga",
+      "jack"
+    ],
+    "name": "Grundig SPIMD",
+    "itemNo": "5DE8TN0OXK"
+  },
+  {
+    "displaySizeInInches": 130,
+    "displayType": "led",
+    "resolutionK": 2,
+    "outputs": [
+      "jack",
+      "hdmi",
+      "coax",
+      "usb-a"
+    ],
+    "name": "Sony IG5DX",
+    "itemNo": "3C5CL5GPX1"
+  },
+  {
+    "displaySizeInInches": 148,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "dvi",
+      "thunderbolt",
+      "jack",
+      "usb-c",
+      "usb-a"
+    ],
+    "name": "JVC 7G8FY",
+    "itemNo": "B0FAHDIHW7"
+  },
+  {
+    "displaySizeInInches": 89,
+    "displayType": "plasma",
+    "resolutionK": 8,
+    "outputs": [
+      "thunderbolt",
+      "jack"
+    ],
+    "name": "Orion PJ96T",
+    "itemNo": "J65E9GFBP2"
+  },
+  {
+    "displaySizeInInches": 110,
+    "displayType": "led",
+    "resolutionK": 8,
+    "outputs": [
+      "usb-c",
+      "dvi",
+      "vga",
+      "thunderbolt"
+    ],
+    "name": "Sony 3X1O8",
+    "itemNo": "C0V95EK9UK"
+  },
+  {
+    "displaySizeInInches": 70,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "analog",
+      "jack",
+      "vga",
+      "coax",
+      "usb-c"
+    ],
+    "name": "Samsung FS6AH",
+    "itemNo": "O3E84YZLIU"
+  },
+  {
+    "displaySizeInInches": 64,
+    "displayType": "led",
+    "resolutionK": 8,
+    "outputs": [
+      "jack",
+      "usb-c",
+      "thunderbolt",
+      "vga",
+      "analog"
+    ],
+    "name": "Sanyo HW3AA",
+    "itemNo": "SRA042UWNK"
+  },
+  {
+    "displaySizeInInches": 111,
+    "displayType": "led",
+    "resolutionK": 2,
+    "outputs": [
+      "jack",
+      "hdmi",
+      "coax"
+    ],
+    "name": "Xiaomi G7CCV",
+    "itemNo": "2V4PSKMSQL"
+  },
+  {
+    "displaySizeInInches": 117,
+    "displayType": "led",
+    "resolutionK": 4,
+    "outputs": [
+      "hdmi",
+      "usb-a",
+      "thunderbolt"
+    ],
+    "name": "Grundig GP7JR",
+    "itemNo": "O52GJZ0YVU"
+  },
+  {
+    "displaySizeInInches": 146,
+    "displayType": "led",
+    "resolutionK": 8,
+    "outputs": [
+      "dvi",
+      "analog"
+    ],
+    "name": "LG P9U9I",
+    "itemNo": "5HHEW57BQK"
+  },
+  {
+    "displaySizeInInches": 96,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "usb-c",
+      "thunderbolt",
+      "usb-a",
+      "hdmi",
+      "analog",
+      "dvi"
+    ],
+    "name": "Sony ADMNK",
+    "itemNo": "DN83P25MW8"
+  },
+  {
+    "displaySizeInInches": 90,
+    "displayType": "led",
+    "resolutionK": 1,
+    "outputs": [
+      "dvi"
+    ],
+    "name": "Samsung Y42YS",
+    "itemNo": "QF935CQJM4"
+  },
+  {
+    "displaySizeInInches": 118,
+    "displayType": "plasma",
+    "resolutionK": 4,
+    "outputs": [
+      "usb-a",
+      "thunderbolt",
+      "usb-micro",
+      "dvi"
+    ],
+    "name": "Grundig Y1OAV",
+    "itemNo": "53OA4E2C6U"
+  },
+  {
+    "displaySizeInInches": 50,
+    "displayType": "plasma",
+    "resolutionK": 4,
+    "outputs": [
+      "coax",
+      "usb-c",
+      "usb-micro",
+      "analog",
+      "thunderbolt",
+      "jack"
+    ],
+    "name": "Samsung NKVSH",
+    "itemNo": "G8VMT0RM1Z"
+  },
+  {
+    "displaySizeInInches": 96,
+    "displayType": "plasma",
+    "resolutionK": 2,
+    "outputs": [
+      "usb-c",
+      "thunderbolt",
+      "hdmi",
+      "dvi",
+      "jack",
+      "vga",
+      "analog"
+    ],
+    "name": "LG WPWEP",
+    "itemNo": "UGZAQMNL7X"
+  },
+  {
+    "displaySizeInInches": 83,
+    "displayType": "led",
+    "resolutionK": 2,
+    "outputs": [
+      "jack",
+      "hdmi",
+      "coax",
+      "usb-a",
+      "usb-micro",
+      "analog"
+    ],
+    "name": "Panasonic 2GLGY",
+    "itemNo": "CLSF7J3QL6"
+  },
+  {
+    "displaySizeInInches": 109,
+    "displayType": "plasma",
+    "resolutionK": 2,
+    "outputs": [
+      "dvi",
+      "analog",
+      "thunderbolt",
+      "usb-micro"
+    ],
+    "name": "Philips 74FA2",
+    "itemNo": "D1BEWGGMQF"
+  },
+  {
+    "displaySizeInInches": 87,
+    "displayType": "plasma",
+    "resolutionK": 1,
+    "outputs": [
+      "hdmi"
+    ],
+    "name": "JVC B4LBM",
+    "itemNo": "GW907UNA3F"
+  }
+]

@@ -1,0 +1,11 @@
+.TV {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin: 15px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.TV span {
+  text-align: left;
+}
