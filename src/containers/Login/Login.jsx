@@ -8,21 +8,34 @@ class Login extends React.Component {
     },
   }
 
+  componentDidMount() {
+    document.addEventListener("keydown", this._handleEnterPress);
+  }
 
-  handleLogin = (event) => {
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this._handleEnterPress);
+  }
+
+  _handleEnterPress = (event) => {
+    if ( event.key === 'Enter' ) {
+      event.preventDefault();
+      this._handleLogin(event);
+    }
+  }
+
+  _handleLogin = (event) => {
     event.preventDefault();
     let isAuth = false;
 
-
     this.props.users.forEach((user) => {
       if (user.email === this.state.loginData.email) {
-        
+
         if (user.password === this.state.loginData.password) {
           isAuth = true;
         }
       }
     });
-    
+
     this.props.loginStatus(isAuth);
   }
 
@@ -37,7 +50,7 @@ class Login extends React.Component {
     newState.loginData.password = event.target.value;
     this.setState(newState);
   }
-  
+
   render() {
 
     return (
@@ -46,9 +59,9 @@ class Login extends React.Component {
           Login
         </h1>
         <div className="login-form">
-              <form onSubmit={this.handleLogin}>
+              <form onSubmit={this._handleLogin}>
                 <input type="email" value={this.state.loginData.email} placeholder="e-mail address" onChange={this.handleEmailChange}></input>
-              
+
                 <input type="password" value={this.state.loginData.password} placeholder="password" onChange={this.handlePasswordChange}></input>
 
                 <button className="login-btn" type="submit">Login</button>

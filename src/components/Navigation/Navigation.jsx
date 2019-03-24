@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {NavLink, withRouter} from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 
 class Navigation extends Component {
@@ -21,6 +21,7 @@ clickHandler = (pathname) => {
         <>
           <li><NavLink onClick={ () => {this.clickHandler("list")}} to="/list">List</NavLink></li>
           <li><NavLink onClick={ () => {this.clickHandler("new")}} to="/new">Add new one</NavLink></li>
+          <li><NavLink onClick={ () => {this.props.handleLogout(false)}} to="/logout">Logout</NavLink></li>
         </>
       )
     }
@@ -31,7 +32,7 @@ clickHandler = (pathname) => {
           <li><NavLink onClick={ () => {this.clickHandler("/")}} to="/" exact >Home</NavLink></li>
           <li><NavLink onClick={ () => {this.clickHandler("login")}} to="/login">Login</NavLink></li>
           <li><NavLink onClick={ () => {this.clickHandler("register")}} to="/register">Register</NavLink></li>
-          
+
           { signedInOptions }
 
         </ul>

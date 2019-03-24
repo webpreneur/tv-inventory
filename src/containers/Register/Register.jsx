@@ -10,8 +10,6 @@ class Register extends Component {
     }
   }
 
-  
-
   handleEmailChange = (event) => {
     const newState = {...this.state};
     newState.newUserData.email = event.target.value;
@@ -30,7 +28,7 @@ class Register extends Component {
     const newUserDetails = {
       email: this.state.newUserData.email,
       password: this.state.newUserData.password
-    }; 
+    };
     this.props.addUser(newUserDetails);
   }
 
@@ -45,9 +43,9 @@ class Register extends Component {
         <div className="register-form">
               <form onSubmit={this.handleSubmit} >
                 <input type="email" value={this.state.newUserData.email} placeholder="e-mail address" onChange={this.handleEmailChange} ></input>
-              
+
                 <input type="password" value={this.state.newUserData.password} placeholder="password" onChange={this.handlePasswordChange}></input>
-  
+
                 <button className="login-btn" type="submit" >Register</button>
               </form>
         </div>

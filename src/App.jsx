@@ -8,26 +8,29 @@ import Register from './containers/Register/Register';
 import List from './containers/List/List';
 import TV from './components/TV/TV';
 import Navigation from './components/Navigation/Navigation';
-import Users from './db/users';
-
-
-
+import users from './db/users';
 
 class App extends Component {
   state = {
+    users,
     isAuthenticated: false,
-    felhasznalok: Users
   }
 
   changeAuthStatus = (isAuthenticated) => {
-    this.setState({isAuthenticated: isAuthenticated});
-    
+
+    this.setState({
+      ...this.state,
+      isAuthenticated
+    });
+
   }
 
   handleNewUserCreation = (userDetails) => {
+
     const newState = {...this.state};
-    newState.felhasznalok.push(userDetails);
+    newState.users.push(userDetails);
     this.setState(newState);
+
   }
 
   render() {
@@ -35,24 +38,24 @@ class App extends Component {
       <BrowserRouter>
 
         <div className="App">
-          <Navigation/>
+          <Navigation handleLogout={this.changeAuthStatus} />
 
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            
+
           </header>
 
         <Switch>
-          <Route path="/login" exact component={() => <Login loginStatus={this.changeAuthStatus} users={this.state.felhasznalok} /> } />
+          <Route path="/login" exact component={() => <Login loginStatus={this.changeAuthStatus} users={this.state.users} /> } />
           <Route path="/register" exact component={ () => <Register addUser={this.handleNewUserCreation} /> } />
           { this.state.isAuthenticated ? <Route path="/list" exact component={List} /> : <Redirect to="/login"/> }
           { this.state.isAuthenticated ? <Route path="/televisions/:id" exact component={TV} /> : <Redirect to="/login"/> }
-          
+
         </Switch>
 
         </div>
       </BrowserRouter>
-    
+
     );
   }
 }
