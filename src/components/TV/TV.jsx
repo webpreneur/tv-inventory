@@ -1,24 +1,37 @@
 import React, { Component } from 'react';
 import './TV.css';
 
-class TV extends Component {
+export default class TV extends Component {
 
   render() {
 
-    const { tvDetails } = this.props;
-    return(
-      <div className="TV">
-        <span>{tvDetails.name}</span>
-        <span>{tvDetails.itemNo}</span>
-        <span>{tvDetails.displaySizeInInches}</span>
-        <span>{tvDetails.displayType}</span>
-        <span>{tvDetails.resolutionK}</span>
+    const {
+      name,
+      itemNo,
+      displaySizeInInches,
+      displayType,
+      resolutionK,
+      outputs
+    } = this.props.tvDetails;
 
+    const outputsList = outputs.map( (output, i) => (<span key={ `${itemNo}_${i}` } >{ output }</span>) );
+
+    return(
+
+      <div className="TV">
+        <span>{ name }</span>
+        <span>{ itemNo }</span>
+        <span>{ displaySizeInInches }</span>
+        <span>{ displayType }</span>
+        <span>{ resolutionK }</span>
+        <span>
+          { outputsList }
+        </span>
       </div>
+
     )
   }
 }
 
-export default TV;
 
 

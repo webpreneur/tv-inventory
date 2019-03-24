@@ -29,6 +29,7 @@ class App extends Component {
 
     const newState = {...this.state};
     newState.users.push(userDetails);
+
     this.setState(newState);
 
   }
@@ -41,12 +42,11 @@ class App extends Component {
           <Navigation handleLogout={this.changeAuthStatus} />
 
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-
+            { window.location.pathname !== 'list' ? <img src={logo} className="App-logo" alt="logo" /> : null}
           </header>
 
         <Switch>
-          <Route path="/login" exact component={() => <Login loginStatus={this.changeAuthStatus} users={this.state.users} /> } />
+          <Route path="/login" exact component={ () => <Login loginStatus={this.changeAuthStatus} users={this.state.users} /> } />
           <Route path="/register" exact component={ () => <Register addUser={this.handleNewUserCreation} /> } />
           { this.state.isAuthenticated ? <Route path="/list" exact component={List} /> : <Redirect to="/login"/> }
           { this.state.isAuthenticated ? <Route path="/televisions/:id" exact component={TV} /> : <Redirect to="/login"/> }

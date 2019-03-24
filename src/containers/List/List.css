@@ -1,0 +1,39 @@
+.grid-header {
+    display: flex;
+}
+
+.grid-header > section {
+    width: 19%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-direction: center;
+
+    align-self: flex-start;
+}
+
+.grid-header > section > span:first-of-type {
+    font-weight: bold;
+}
+
+.grid-header > section > * {
+    width: 100%;
+    display: block;
+}
+
+.filter-type-container {
+    margin: 20px;
+}
+
+.filter-type-container div {
+    display: flex;
+    align-items: flex-start;
+}
+
+.filter-type-container label {
+    font-size: .9rem;
+}
+
+.filter-box {
+    padding: 10px;
+}

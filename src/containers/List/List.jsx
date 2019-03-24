@@ -1,57 +1,127 @@
 import React, { Component } from 'react';
-
-import TV from '../../components/TV/TV';
+import './List.css';
 import Televisions from '../../db/tvs';
 
-class List extends Component {
+import TV from '../../components/TV/TV';
+import NameFilter from '../../components/Filter/NameFilter/NameFilter';
+import NumberFilter from '../../components/Filter/NumberFilter/NumberFilter';
+import CheckBoxFilter from '../../components/Filter/CheckBoxFilter/CheckBoxFilter';
+
+export default class List extends Component {
 
   state = {
-    televisions: Televisions 
+    televisions: Televisions,
+    filterValues: {
+      displaySizes: [],
+      displayTypes: [],
+      resolutionsKs: [],
+      outputs: [],
+    },
+    filterConfig: {
+      name: '',
+      displaySize: {
+        value: null,
+        type: '',
+      },
+      displayType: [''],
+      resolutionK: {
+        value: null,
+        type: '',
+      },
+      outputs: [''],
+    }
   }
 
-  componentDidMount () {
-    this.getDisplaySizes();
+  componentDidMount() {
+    this._populateFilterValues();
   }
 
-  getDisplaySizes = () => {
-    const displaySizes = this.state.televisions.map((tv) => tv.displaySizeInInches);
-    const displaySizesSet = new Set(displaySizes);
-    const individualDisplaySizes = Array.from(displaySizesSet).sort((a, b) => a - b);
-    console.log(individualDisplaySizes);
+  _populateFilterValues() {
+
+    const filterValues = {
+      displaySizes: this._pullAndSortIndividualValues('displaySizeInInches'),
+      displayTypes: this._pullAndSortIndividualValues('displayType'),
+      resolutionsKs: this._pullAndSortIndividualValues('resolutionK'),
+      outputs: this._pullAndSortIndividualValues('outputs'),
+    }
+
+    this.setState({
+      ...this.state,
+      filterValues,
+    });
+
+  }
+
+  _pullAndSortIndividualValues(propKey) {
+    const arrayOfValues = this.state.televisions.map( tv => tv[propKey] ).flat();
+    const setOfValues = new Set(arrayOfValues);
+    const individualAndSortedValuesArray = Array.from(setOfValues).sort((a, b) => a - b);
+
+    return individualAndSortedValuesArray;
   }
 
   render() {
 
-    const headers = {
-      name: "Name",
-      itemNo: "Item Number",
-      displaySizeInInches: "Display Size In Inches",
-      displayType: "Display Type",
-      resolutionK: "Resolution K"
-    }
+    return (
+      <>
+        <header className="TV grid-header">
+          <section>
+            <span>Name</span>
+            <div className="filter-box">
+              <NameFilter />
+            </div>
+          </section>
 
-    return(
-      <div>
+          <section>
+            <span>ItemNo</span>
+          </section>
 
-      <TV tvDetails={headers}/>
+          <section>
+            <span>DisplaySize</span>
+            <div className="filter-box">
+              <NumberFilter />
+            </div>
+          </section>
+
+          <section>
+            <span>DisplayType</span>
+            <div className="filter-box">
+              <CheckBoxFilter checkboxValues={this.state.filterValues.displayTypes} />
+            </div>
+          </section>
+
+          <section>
+            <span>ResolutionK</span>
+            <div className="filter-box">
+              <NumberFilter />
+            </div>
+          </section>
+
+          <section>
+            <span>Outputs</span>
+            <div className="filter-box">
+              <CheckBoxFilter checkboxValues={this.state.filterValues.outputs} />
+            </div>
+          </section>
+        </header>
 
 
-        {
-          this.state.televisions.map( (television) => {
-            return (
-              
-              <TV 
-                key={television.itemNo}
-                tvDetails={television}
-              />
+        <main>
+          {
+            this.state.televisions.map( (television) => (
+
+                <TV
+                  key={television.itemNo}
+                  tvDetails={television}
+                />
+
+              )
             )
-          })
-        }
-      </div>
+          }
+        </main>
+      </>
     )
 
   }
 
 }
-
-export default List;
