@@ -6,16 +6,15 @@ export default class CheckBoxFilter extends Component {
       <>
         {
           this.props.checkboxValues.map( (checkboxValue, i) => (
-            <>
+            <div key={ checkboxValue + i } >
               <label htmlFor={checkboxValue + i}>{checkboxValue}</label>
               <input
                 type="checkbox"
                 id={checkboxValue + i}
-                key={i + checkboxValue}
                 value={checkboxValue}
                 name={checkboxValue}
               />
-            </>
+            </div>
           ))
         }
       </>

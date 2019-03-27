@@ -11,25 +11,45 @@ export default class List extends Component {
 
   state = {
     televisions: Televisions,
-    filterValues: {
-      displaySizes: [],
+    filteredTelevisions: [],
+    filtersValuesSet: {
+      displaySizes: [], // unused value set yet
       displayTypes: [],
-      resolutionsKs: [],
+      resolutionsKs: [], // unused value set yet
       outputs: [],
     },
-    filterConfig: {
-      name: '',
-      displaySize: {
-        value: null,
-        type: '',
+    filters: [
+      {
+        filterLabel: 'name',
+        filterType: 'string',
+        filterValue: '',
+        filterMode: undefined,
       },
-      displayType: [''],
-      resolutionK: {
-        value: null,
-        type: '',
+      {
+        filterLabel: 'displaySize',
+        filterType: 'number',
+        filterValue: null,
+        filterMode: 'lessThan',
       },
-      outputs: [''],
-    }
+      {
+        filterLabel: 'displayType',
+        filterType: 'checkbox',
+        filterValue: [],
+        filterMode: undefined,
+      },
+      {
+        filterLabel: 'resolutionK',
+        filterType: 'number',
+        filterValue: null,
+        filterMode: 'lessThan',
+      },
+      {
+        filterLabel: 'outputs',
+        filterType: 'checkbox',
+        filterValue: [],
+        filterMode: undefined,
+      },
+    ]
   }
 
   componentDidMount() {
@@ -38,7 +58,7 @@ export default class List extends Component {
 
   _populateFilterValues() {
 
-    const filterValues = {
+    const filtersValuesSet = {
       displaySizes: this._pullAndSortIndividualValues('displaySizeInInches'),
       displayTypes: this._pullAndSortIndividualValues('displayType'),
       resolutionsKs: this._pullAndSortIndividualValues('resolutionK'),
@@ -47,7 +67,7 @@ export default class List extends Component {
 
     this.setState({
       ...this.state,
-      filterValues,
+      filtersValuesSet,
     });
 
   }
@@ -60,7 +80,90 @@ export default class List extends Component {
     return individualAndSortedValuesArray;
   }
 
+  _isGridFiltered() {
+    const isGridFiltered = this.state.filters.some(
+      ({ filterValue }) => this._isFilterActive(filterValue)
+    );
+
+    console.log(isGridFiltered);
+
+    return isGridFiltered;
+
+  }
+
+  handleFilter = ({
+    filterValue,
+    filterLabel
+  }) => {
+
+    const filters = [...this.state.filters];
+    const filterIndex = this.state.filters.findIndex( filter => filter.filterLabel === filterLabel );
+
+    filters[filterIndex].filterValue = filterValue;
+
+    this.setState({
+      ...this.state,
+      filters,
+    });
+
+    this._filterTelevisions();
+
+  }
+
+  _filterTelevisions() {
+
+    const activeFilters = this.state.filters.filter( ({ filterValue }) => this._isFilterActive(filterValue) );
+
+    let filteredTVs = [...this.state.televisions];
+
+    activeFilters.forEach(({
+      filterLabel: label,
+      filterValue: value,
+      filterMode: mode,
+      filterType: type,
+    }) => {
+      filteredTVs = filteredTVs.filter( tv => {
+        let isCurrentTvMatches = false;
+
+        switch(type) {
+          case 'string':
+            isCurrentTvMatches = tv[label].toLowerCase().includes(value.toLowerCase());
+            break;
+          case 'number':
+
+            break;
+          case 'checkbox':
+
+            break;
+          default:
+            throw new TypeError(`Unkown filter type: ${type}`);
+        }
+
+        return isCurrentTvMatches;
+      })
+    });
+
+    this.setState({
+      ...this.state,
+      filteredTelevisions: filteredTVs,
+    })
+
+  }
+
+  _isFilterActive(filterValue) {
+
+    const isArray = Array.isArray(filterValue);
+
+    const isFilterActive = ( filterValue && !isArray ) || ( isArray && filterValue.length > 0 );
+
+    console.log('_isFilterActive:::', filterValue, isFilterActive );
+
+    return isFilterActive;
+  }
+
   render() {
+
+    const displayedTVs = !this._isGridFiltered() ? this.state.televisions : this.state.filteredTelevisions;
 
     return (
       <>
@@ -68,7 +171,7 @@ export default class List extends Component {
           <section>
             <span>Name</span>
             <div className="filter-box">
-              <NameFilter />
+              <NameFilter onChange={ this.handleFilter } />
             </div>
           </section>
 
@@ -86,7 +189,7 @@ export default class List extends Component {
           <section>
             <span>DisplayType</span>
             <div className="filter-box">
-              <CheckBoxFilter checkboxValues={this.state.filterValues.displayTypes} />
+              <CheckBoxFilter checkboxValues={this.state.filtersValuesSet.displayTypes} />
             </div>
           </section>
 
@@ -99,8 +202,8 @@ export default class List extends Component {
 
           <section>
             <span>Outputs</span>
-            <div className="filter-box">
-              <CheckBoxFilter checkboxValues={this.state.filterValues.outputs} />
+            <div className="filter-box outputs">
+              <CheckBoxFilter checkboxValues={this.state.filtersValuesSet.outputs} />
             </div>
           </section>
         </header>
@@ -108,7 +211,7 @@ export default class List extends Component {
 
         <main>
           {
-            this.state.televisions.map( (television) => (
+            displayedTVs.map( (television) => (
 
                 <TV
                   key={television.itemNo}
