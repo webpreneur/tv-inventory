@@ -93,13 +93,15 @@ export default class List extends Component {
 
   handleFilter = ({
     filterValue,
-    filterLabel
+    filterLabel,
+    filterMode,
   }) => {
 
     const filters = [...this.state.filters];
     const filterIndex = this.state.filters.findIndex( filter => filter.filterLabel === filterLabel );
 
-    filters[filterIndex].filterValue = filterValue;
+    filters[filterIndex].filterValue  = filterValue;
+    filters[filterIndex].filterMode   = filterMode;
 
     this.setState({
       ...this.state,
@@ -125,12 +127,26 @@ export default class List extends Component {
       filteredTVs = filteredTVs.filter( tv => {
         let isCurrentTvMatches = false;
 
+        console.log(activeFilters);
+
         switch(type) {
           case 'string':
             isCurrentTvMatches = tv[label].toLowerCase().includes(value.toLowerCase());
             break;
           case 'number':
-
+            switch(mode) {
+              case 'lessThan':
+                isCurrentTvMatches = tv[label] < value;
+                break;
+              case 'equals':
+                isCurrentTvMatches = tv[label] === value;
+                break;
+              case 'greaterThan':
+                isCurrentTvMatches = tv[label] > value;
+                break;
+              default:
+                throw new Error(`Unkown filter mode: ${mode}`);
+            }
             break;
           case 'checkbox':
 
@@ -182,7 +198,7 @@ export default class List extends Component {
           <section>
             <span>DisplaySize</span>
             <div className="filter-box">
-              <NumberFilter />
+              <NumberFilter onChange={ this.handleFilter } />
             </div>
           </section>
 
@@ -196,7 +212,7 @@ export default class List extends Component {
           <section>
             <span>ResolutionK</span>
             <div className="filter-box">
-              <NumberFilter />
+              <NumberFilter onChange={ this.handleFilter } />
             </div>
           </section>
 
