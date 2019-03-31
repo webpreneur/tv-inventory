@@ -3,17 +3,22 @@ import React, { Component } from 'react'
 export default class NumberFilter extends Component {
 
   filterMode = 'lessThan';
+  searchValue = null;
 
   _handleSearchValueInput = ({
     target: {
         value: searchValue,
     }
   }) => {
+
+    this.searchValue = parseInt(searchValue, 10);
+
     this.props.onChange({
-        filterLabel: 'name',
-        filterValue: parseInt(searchValue, 10),
+        filterLabel: this.props.label,
+        filterValue: this.searchValue,
         filterMode: this.filterMode,
     });
+
   }
 
   _handleFilterModeInput = ({
@@ -22,6 +27,11 @@ export default class NumberFilter extends Component {
     }
   }) => {
     this.filterMode = filterMode;
+    this._handleSearchValueInput({
+      target:{
+        value: this.searchValue,
+      }
+    });
   }
 
   render() {

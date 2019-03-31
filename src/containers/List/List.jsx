@@ -18,7 +18,7 @@ export default class List extends Component {
       resolutionsKs: [], // unused value set yet
       outputs: [],
     },
-    filters: [
+    activeFilters: [
       {
         filterLabel: 'name',
         filterType: 'string',
@@ -26,7 +26,7 @@ export default class List extends Component {
         filterMode: undefined,
       },
       {
-        filterLabel: 'displaySize',
+        filterLabel: 'displaySizeInInches',
         filterType: 'number',
         filterValue: null,
         filterMode: 'lessThan',
@@ -81,24 +81,22 @@ export default class List extends Component {
   }
 
   _isGridFiltered() {
-    const isGridFiltered = this.state.filters.some(
+    const isGridFiltered = this.state.activeFilters.some(
       ({ filterValue }) => this._isFilterActive(filterValue)
     );
-
-    console.log(isGridFiltered);
 
     return isGridFiltered;
 
   }
 
   handleFilter = ({
-    filterValue,
     filterLabel,
+    filterValue,
     filterMode,
   }) => {
 
-    const filters = [...this.state.filters];
-    const filterIndex = this.state.filters.findIndex( filter => filter.filterLabel === filterLabel );
+    const filters = [...this.state.activeFilters];
+    const filterIndex = this.state.activeFilters.findIndex( ({ filterLabel: label }) => label === filterLabel );
 
     filters[filterIndex].filterValue  = filterValue;
     filters[filterIndex].filterMode   = filterMode;
@@ -114,9 +112,11 @@ export default class List extends Component {
 
   _filterTelevisions() {
 
-    const activeFilters = this.state.filters.filter( ({ filterValue }) => this._isFilterActive(filterValue) );
+    const activeFilters = this.state.activeFilters.filter( ({ filterValue }) => this._isFilterActive(filterValue) );
 
     let filteredTVs = [...this.state.televisions];
+
+    console.log({activeFilters});
 
     activeFilters.forEach(({
       filterLabel: label,
@@ -127,29 +127,30 @@ export default class List extends Component {
       filteredTVs = filteredTVs.filter( tv => {
         let isCurrentTvMatches = false;
 
-        console.log(activeFilters);
-
         switch(type) {
           case 'string':
-            isCurrentTvMatches = tv[label].toLowerCase().includes(value.toLowerCase());
+            isCurrentTvMatches =
+              mode === 'contains' ?
+                tv[label].toLowerCase().includes(value.toLowerCase()) :
+                tv[label] === value;
             break;
           case 'number':
             switch(mode) {
               case 'lessThan':
-                isCurrentTvMatches = tv[label] < value;
+                isCurrentTvMatches = parseInt(tv[label], 10) < parseInt(value, 10);
                 break;
               case 'equals':
-                isCurrentTvMatches = tv[label] === value;
+                isCurrentTvMatches = parseInt(tv[label], 10) === parseInt(value, 10);
                 break;
               case 'greaterThan':
-                isCurrentTvMatches = tv[label] > value;
+                isCurrentTvMatches = parseInt(tv[label], 10) > parseInt(value, 10);
                 break;
               default:
                 throw new Error(`Unkown filter mode: ${mode}`);
             }
             break;
           case 'checkbox':
-
+            isCurrentTvMatches = value.every(checkboxVal => tv[label].includes(checkboxVal));
             break;
           default:
             throw new TypeError(`Unkown filter type: ${type}`);
@@ -172,14 +173,12 @@ export default class List extends Component {
 
     const isFilterActive = ( filterValue && !isArray ) || ( isArray && filterValue.length > 0 );
 
-    console.log('_isFilterActive:::', filterValue, isFilterActive );
-
     return isFilterActive;
   }
 
   render() {
 
-    const displayedTVs = !this._isGridFiltered() ? this.state.televisions : this.state.filteredTelevisions;
+    const displayedTVs = this._isGridFiltered() ? this.state.filteredTelevisions : this.state.televisions;
 
     return (
       <>
@@ -198,28 +197,42 @@ export default class List extends Component {
           <section>
             <span>DisplaySize</span>
             <div className="filter-box">
-              <NumberFilter onChange={ this.handleFilter } />
+              <NumberFilter
+                onChange={ this.handleFilter }
+                label={"displaySizeInInches"}
+              />
             </div>
           </section>
 
           <section>
             <span>DisplayType</span>
             <div className="filter-box">
-              <CheckBoxFilter checkboxValues={this.state.filtersValuesSet.displayTypes} />
+              <CheckBoxFilter
+                onChange={ this.handleFilter }
+                label={"displayType"}
+                checkboxValues={ this.state.filtersValuesSet.displayTypes }
+              />
             </div>
           </section>
 
           <section>
             <span>ResolutionK</span>
             <div className="filter-box">
-              <NumberFilter onChange={ this.handleFilter } />
+              <NumberFilter
+                onChange={ this.handleFilter }
+                label={"resolutionK"}
+              />
             </div>
           </section>
 
           <section>
             <span>Outputs</span>
             <div className="filter-box outputs">
-              <CheckBoxFilter checkboxValues={this.state.filtersValuesSet.outputs} />
+              <CheckBoxFilter
+                onChange={ this.handleFilter }
+                label={"outputs"}
+                checkboxValues={ this.state.filtersValuesSet.outputs }
+              />
             </div>
           </section>
         </header>
