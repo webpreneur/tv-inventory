@@ -8,6 +8,7 @@ import Register from './containers/Register/Register';
 import List from './containers/List/List';
 import TV from './components/TV/TV';
 import Navigation from './components/Navigation/Navigation';
+import Televisions from '../../db/tvs';
 import users from './db/users';
 
 class App extends Component {
@@ -48,8 +49,25 @@ class App extends Component {
         <Switch>
           <Route path="/login" exact component={ () => <Login loginStatus={this.changeAuthStatus} users={this.state.users} /> } />
           <Route path="/register" exact component={ () => <Register addUser={this.handleNewUserCreation} /> } />
-          { this.state.isAuthenticated ? <Route path="/list" exact component={List} /> : <Redirect to="/login"/> }
-          { this.state.isAuthenticated ? <Route path="/televisions/:id" exact component={TV} /> : <Redirect to="/login"/> }
+
+          {
+            this.state.isAuthenticated ?
+            <Route
+              path="/televisions"
+              exact
+              component={ () => <List Televisions={Televisions} > }
+            /> :
+            <Redirect to="/login"/>
+          }
+          {
+            this.state.isAuthenticated ?
+            <Route
+              path="/televisions/:id"
+              component={ () => <TV tvDetails={ Televisions.find( (tv) => tv.) } />  }
+              exact
+            /> :
+            <Redirect to="/login"/>
+          }
 
         </Switch>
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 
-
 class Navigation extends Component {
 
 state = {
@@ -19,7 +18,7 @@ clickHandler = (pathname) => {
     if (this.state.pathname !== "/") {
       signedInOptions = (
         <>
-          <li><NavLink onClick={ () => {this.clickHandler("list")}} to="/list">List</NavLink></li>
+          <li><NavLink onClick={ () => {this.clickHandler("televisions")}} to="/televisions">List</NavLink></li>
           <li><NavLink onClick={ () => {this.clickHandler("new")}} to="/new">Add new one</NavLink></li>
           <li><NavLink onClick={ () => {this.props.handleLogout(false)}} to="/logout">Logout</NavLink></li>
         </>

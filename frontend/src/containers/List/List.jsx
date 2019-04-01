@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './List.css';
-import Televisions from '../../db/tvs';
+
 
 import TV from '../../components/TV/TV';
 import NameFilter from '../../components/Filter/NameFilter/NameFilter';
@@ -10,7 +11,7 @@ import CheckBoxFilter from '../../components/Filter/CheckBoxFilter/CheckBoxFilte
 export default class List extends Component {
 
   state = {
-    televisions: Televisions,
+    televisions: this.props.Televisions,
     filteredTelevisions: [],
     filtersValuesSet: {
       displaySizes: [], // unused value set yet
@@ -242,10 +243,11 @@ export default class List extends Component {
           {
             displayedTVs.map( (television) => (
 
+              <Link to={`/televisions/${television.itemNo}`} key={television.itemNo}>
                 <TV
-                  key={television.itemNo}
                   tvDetails={television}
                 />
+              </Link>
 
               )
             )
