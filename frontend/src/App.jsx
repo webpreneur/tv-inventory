@@ -8,13 +8,43 @@ import Register from './containers/Register/Register';
 import List from './containers/List/List';
 import TV from './components/TV/TV';
 import Navigation from './components/Navigation/Navigation';
-import Televisions from '../../db/tvs';
+// import Televisions from '../../db/tvs';
 import users from './db/users';
+const APIURL = '/api/tvs';
 
 class App extends Component {
+
   state = {
     users,
+    tvs: [],
     isAuthenticated: false,
+  }
+
+  componentWillMount() {
+    this.loadTVs();
+  }
+
+  loadTVs() {
+    fetch(APIURL)
+      .then( response => {
+        if(!response.ok) {
+          if ( response.status >= 400 && response.status < 500 ) {
+            return response.json()
+              .then(data => {
+                let err = {errorMessage: data.message};
+                throw err;
+              })
+          } else {
+            let err = {errorMessage: 'please try again later, server is not responding'};
+            throw err;
+          }
+        }
+        return response.json();
+      })
+      .then( tvs => this.setState({
+        ...this.state,
+        tvs,
+      }));
   }
 
   changeAuthStatus = (isAuthenticated) => {
