@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './TV.css';
 
 const TV = ({
@@ -8,7 +9,8 @@ const TV = ({
   displaySizeInInches,
   displayType,
   resolutionK,
-  outputs
+  outputs,
+  onDelete,
 }) => {
 
   const outputsList = outputs.map(
@@ -20,12 +22,15 @@ const TV = ({
   return(
 
     <div className="TV">
-      <span>{ name }</span>
+      <Link to={`/televisions/${_id}`} key={_id}>
+        <span>{ name }</span>
+      </Link>
       <span>{ itemNo }</span>
       <span>{ displaySizeInInches }</span>
       <span>{ displayType }</span>
       <span>{ resolutionK }</span>
       <span>{ outputsList }</span>
+      <span onClick={onDelete}> X </span>
     </div>
 
   )

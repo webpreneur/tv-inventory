@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './List.css';
 
 import TV from '../../components/TV/TV';
 import NameFilter from '../../components/Filter/NameFilter/NameFilter';
 import NumberFilter from '../../components/Filter/NumberFilter/NumberFilter';
 import CheckBoxFilter from '../../components/Filter/CheckBoxFilter/CheckBoxFilter';
-import TvForm from '../../components/Filter/TvForm/TvForm';
+import TvForm from '../../components/TV/TvForm/TvForm';
 import apiUrls from '../../api/api-urls';
 
 export default class List extends Component {
@@ -52,10 +51,6 @@ export default class List extends Component {
         filterMode: undefined,
       },
     ]
-  }
-
-  componentWillMount() {
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -184,8 +179,6 @@ export default class List extends Component {
 
   addTv = (tvData) => {
 
-    console.log(tvData);
-
     fetch(apiUrls.tvApi, {
       method: 'post',
       headers: new Headers({
@@ -219,9 +212,41 @@ export default class List extends Component {
       });
   }
 
-  render() {
+  deleteTv = (id) => () => {
+    const deleteURL = `${apiUrls.tvApi}${id}`;
 
-    console.log(this.state);
+    fetch(deleteURL, {
+      method: 'DELETE'
+    })
+      .then( response => {
+        if(!response.ok) {
+          if ( response.status >= 400 && response.status < 500 ) {
+            return response.json()
+              .then(data => {
+                let err = {errorMessage: data.message};
+                throw err;
+              })
+          } else {
+            let err = {errorMessage: 'please try again later, server is not responding'};
+            throw err;
+          }
+        }
+        return;
+      })
+      .then( () => {
+
+        const newTvs = this.state.tvs.filter( tv => tv._id !== id );
+
+        this.setState({
+          ...this.state,
+          tvs: newTvs,
+        });
+
+      });
+
+  }
+
+  render() {
 
     const displayedTVs = this._isGridFiltered() ? this.state.filteredTelevisions : this.state.tvs;
 
@@ -284,15 +309,11 @@ export default class List extends Component {
 
 
         <main>
-          <p>here we'll get the add new row</p>
+          <p>Add new TV:</p>
           <TvForm addTv={ this.addTv } />
           {
             displayedTVs.map( tv => (
-
-              <Link to={`/televisions/${tv._id}`} key={tv._id}>
-                <TV { ...tv } />
-              </Link>
-
+                <TV key={tv._id} { ...tv } onDelete={this.deleteTv(tv._id)} />
               )
             )
           }

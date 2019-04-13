@@ -6,10 +6,10 @@ import './App.css';
 import Login from './containers/Login/Login';
 import Register from './containers/Register/Register';
 import List from './containers/List/List';
-import TV from './components/TV/TV';
 import Navigation from './components/Navigation/Navigation';
 import users from './db/users';
 import apiUrls from './api/api-urls';
+import TvDetails from './components/TV/TvDetails/TvDetails';
 
 class App extends Component {
 
@@ -90,15 +90,15 @@ class App extends Component {
             /> :
             <Redirect to="/login"/>
           }
-{/*           {
+          {
             this.state.isAuthenticated ?
             <Route
               path="/televisions/:id"
-              component={ () => <TV tvDetails={ Televisions.find( (tv) => tv.) } />  }
+              render={ (props) => <TvDetails {...props} /> }
               exact
             /> :
             <Redirect to="/login"/>
-          } */}
+          }
 
         </Switch>
 
