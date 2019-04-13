@@ -8,7 +8,7 @@ router.route('/')
     .get(getTVs)
     .post(createTV)
 
-router.route('/tvId')
+router.route('/:tvId')
     .get(getTV)
     .put(updateTV)
     .delete(deleteTV)
