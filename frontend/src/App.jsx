@@ -8,16 +8,15 @@ import Register from './containers/Register/Register';
 import List from './containers/List/List';
 import TV from './components/TV/TV';
 import Navigation from './components/Navigation/Navigation';
-// import Televisions from '../../db/tvs';
 import users from './db/users';
-const APIURL = '/api/tvs';
+import apiUrls from './api/api-urls';
 
 class App extends Component {
 
   state = {
     users,
     tvs: [],
-    isAuthenticated: false,
+    isAuthenticated: true,
   }
 
   componentWillMount() {
@@ -25,7 +24,7 @@ class App extends Component {
   }
 
   loadTVs() {
-    fetch(APIURL)
+    fetch(apiUrls.tvApi)
       .then( response => {
         if(!response.ok) {
           if ( response.status >= 400 && response.status < 500 ) {
@@ -41,10 +40,12 @@ class App extends Component {
         }
         return response.json();
       })
-      .then( tvs => this.setState({
-        ...this.state,
-        tvs,
-      }));
+      .then( tvs => {
+        this.setState({
+          ...this.state,
+          tvs
+        });
+      });
   }
 
   changeAuthStatus = (isAuthenticated) => {
@@ -85,11 +86,11 @@ class App extends Component {
             <Route
               path="/televisions"
               exact
-              component={ () => <List Televisions={Televisions} > }
+              component={ () => <List Televisions={this.state.tvs} /> }
             /> :
             <Redirect to="/login"/>
           }
-          {
+{/*           {
             this.state.isAuthenticated ?
             <Route
               path="/televisions/:id"
@@ -97,7 +98,7 @@ class App extends Component {
               exact
             /> :
             <Redirect to="/login"/>
-          }
+          } */}
 
         </Switch>
 

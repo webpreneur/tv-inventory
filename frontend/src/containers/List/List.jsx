@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './List.css';
 
-
 import TV from '../../components/TV/TV';
 import NameFilter from '../../components/Filter/NameFilter/NameFilter';
 import NumberFilter from '../../components/Filter/NumberFilter/NumberFilter';
 import CheckBoxFilter from '../../components/Filter/CheckBoxFilter/CheckBoxFilter';
+import TvForm from '../../components/Filter/TvForm/TvForm';
+import apiUrls from '../../api/api-urls';
 
 export default class List extends Component {
 
   state = {
-    televisions: this.props.Televisions,
+    tvs: this.props.Televisions,
     filteredTelevisions: [],
     filtersValuesSet: {
       displaySizes: [], // unused value set yet
@@ -53,6 +54,10 @@ export default class List extends Component {
     ]
   }
 
+  componentWillMount() {
+    console.log(this.props);
+  }
+
   componentDidMount() {
     this._populateFilterValues();
   }
@@ -74,7 +79,7 @@ export default class List extends Component {
   }
 
   _pullAndSortIndividualValues(propKey) {
-    const arrayOfValues = this.state.televisions.map( tv => tv[propKey] ).flat();
+    const arrayOfValues = this.state.tvs.map( tv => tv[propKey] ).flat();
     const setOfValues = new Set(arrayOfValues);
     const individualAndSortedValuesArray = Array.from(setOfValues).sort((a, b) => a - b);
 
@@ -115,7 +120,7 @@ export default class List extends Component {
 
     const activeFilters = this.state.activeFilters.filter( ({ filterValue }) => this._isFilterActive(filterValue) );
 
-    let filteredTVs = [...this.state.televisions];
+    let filteredTVs = [...this.state.tvs];
 
     console.log({activeFilters});
 
@@ -177,9 +182,48 @@ export default class List extends Component {
     return isFilterActive;
   }
 
+  addTv = (tvData) => {
+
+    console.log(tvData);
+
+    fetch(apiUrls.tvApi, {
+      method: 'post',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify(tvData)
+    })
+      .then( response => {
+        if(!response.ok) {
+          if ( response.status >= 400 && response.status < 500 ) {
+            return response.json()
+              .then(data => {
+                let err = {errorMessage: data.message};
+                throw err;
+              })
+          } else {
+            let err = {errorMessage: 'please try again later, server is not responding'};
+            throw err;
+          }
+        }
+        return response.json();
+      })
+      .then( newTV => {
+        this.setState({
+          ...this.state,
+          tvs: [
+            ...this.state.tvs,
+            newTV,
+          ]
+        });
+      });
+  }
+
   render() {
 
-    const displayedTVs = this._isGridFiltered() ? this.state.filteredTelevisions : this.state.televisions;
+    console.log(this.state);
+
+    const displayedTVs = this._isGridFiltered() ? this.state.filteredTelevisions : this.state.tvs;
 
     return (
       <>
@@ -240,13 +284,13 @@ export default class List extends Component {
 
 
         <main>
+          <p>here we'll get the add new row</p>
+          <TvForm addTv={ this.addTv } />
           {
-            displayedTVs.map( (television) => (
+            displayedTVs.map( tv => (
 
-              <Link to={`/televisions/${television.itemNo}`} key={television.itemNo}>
-                <TV
-                  tvDetails={television}
-                />
+              <Link to={`/televisions/${tv._id}`} key={tv._id}>
+                <TV { ...tv } />
               </Link>
 
               )
