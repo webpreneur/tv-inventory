@@ -1,38 +1,30 @@
 import React, { Component } from 'react';
 
-
-class Register extends Component {
+export default class Register extends Component {
 
   state = {
-    newUserData: {
-      email: "",
-      password: "",
+    email: "",
+    password: "",
+  }
+
+  handleChange = key => ({
+    target: {
+      value
     }
+  }) => {
+    this.setState({
+      ...this.state,
+      [key]: value,
+    });
   }
 
-  handleEmailChange = (event) => {
-    const newState = {...this.state};
-    newState.newUserData.email = event.target.value;
-    this.setState(newState);
+  handleSubmit = e => {
+
+    this.props.addUser({
+      ...this.state,
+    });
+
   }
-
-  handlePasswordChange = (event) => {
-    const newState = {...this.state};
-    newState.newUserData.password = event.target.value;
-    this.setState(newState);
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-
-    const newUserDetails = {
-      email: this.state.newUserData.email,
-      password: this.state.newUserData.password
-    };
-    this.props.addUser(newUserDetails);
-  }
-
-
 
   render() {
     return (
@@ -41,18 +33,25 @@ class Register extends Component {
           Register
         </h1>
         <div className="register-form">
-              <form onSubmit={this.handleSubmit} >
-                <input type="email" value={this.state.newUserData.email} placeholder="e-mail address" onChange={this.handleEmailChange} ></input>
 
-                <input type="password" value={this.state.newUserData.password} placeholder="password" onChange={this.handlePasswordChange}></input>
+          <input
+            type="email"
+            value={this.state.email}
+            placeholder="e-mail address"
+            onChange={this.handleChange('email')} >
+          </input>
 
-                <button className="login-btn" type="submit" >Register</button>
-              </form>
+          <input
+            type="password"
+            value={this.state.password}
+            placeholder="password"
+            onChange={this.handleChange('password')}>
+          </input>
+
+          <button className="login-btn" onClick={this.handleSubmit} >Register</button>
+
         </div>
       </>
     );
   }
 }
-
-
-export default Register;

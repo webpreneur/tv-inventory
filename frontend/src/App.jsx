@@ -55,9 +55,6 @@ class App extends Component {
 
     const newTvs = this.state.tvs.filter( tv => tv._id !== id );
 
-    console.log(this.state.tvs);
-    console.log(newTvs);
-
     this.setState({
         tvs: newTvs,
     });
@@ -75,12 +72,16 @@ class App extends Component {
 
   }
 
-  handleNewUserCreation = (userDetails) => {
+  addUser = async (userDetails) => {
 
-    const newState = {...this.state};
+    let newlyAddedUser = await apiCalls.createUser(userDetails);
+
+    console.log(newlyAddedUser);
+
+  /*   const newState = {...this.state};
     newState.users.push(userDetails);
 
-    this.setState(newState);
+    this.setState(newState); */
 
   }
 
@@ -97,7 +98,7 @@ class App extends Component {
 
         <Switch>
           <Route path="/login" exact component={ () => <Login loginStatus={this.changeAuthStatus} users={this.state.users} /> } />
-          <Route path="/register" exact component={ () => <Register addUser={this.handleNewUserCreation} /> } />
+          <Route path="/register" exact component={ () => <Register addUser={this.addUser} /> } />
 
           {
             this.state.isAuthenticated ?
