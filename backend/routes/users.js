@@ -22,7 +22,8 @@ router.route('/')
             .normalizeEmail(),
         body('password')
             .trim()
-            .isLength({min: 5}),
+            .isLength({min: 5})
+            .withMessage('Please provide a password with a min length of 5 characters.'),
     ], createUser);
 
 module.exports = router;
