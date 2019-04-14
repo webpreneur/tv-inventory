@@ -1,11 +1,10 @@
 import React from 'react';
 
-class Login extends React.Component {
+export default class Login extends React.Component {
+
   state = {
-    loginData: {
-      email: "",
-      password: ""
-    },
+    email: "",
+    password: ""
   }
 
   componentDidMount() {
@@ -16,40 +15,31 @@ class Login extends React.Component {
     document.removeEventListener("keydown", this._handleEnterPress);
   }
 
-  _handleEnterPress = (event) => {
+  _handleEnterPress = event => {
     if ( event.key === 'Enter' ) {
       event.preventDefault();
       this._handleLogin(event);
     }
   }
 
-  _handleLogin = (event) => {
+  _handleLogin = event => {
+
     event.preventDefault();
-    let isAuth = false;
 
-    this.props.users.forEach((user) => {
-      if (user.email === this.state.loginData.email) {
-
-        if (user.password === this.state.loginData.password) {
-          isAuth = true;
-        }
-      }
+    this.props.login({
+      ...this.state
     });
 
-    this.props.loginStatus(isAuth);
   }
 
-  handleEmailChange = (event) => {
-    const newState = {...this.state};
-    newState.loginData.email = event.target.value;
-    this.setState(newState);
-  }
-
-  handlePasswordChange = (event) => {
-    const newState = {...this.state};
-    newState.loginData.password = event.target.value;
-    this.setState(newState);
-  }
+  _handleChange = key => ({
+    target: {
+      value
+    }
+  }) => this.setState({
+    ...this.state,
+    [key]: value,
+  })
 
   render() {
 
@@ -58,19 +48,31 @@ class Login extends React.Component {
         <h1>
           Login
         </h1>
-        <div className="login-form">
-              <form onSubmit={this._handleLogin}>
-                <input type="email" value={this.state.loginData.email} placeholder="e-mail address" onChange={this.handleEmailChange}></input>
 
-                <input type="password" value={this.state.loginData.password} placeholder="password" onChange={this.handlePasswordChange}></input>
+        <div className="login-form">
+
+              <form onSubmit={this._handleLogin}>
+                <input
+                  type="email"
+                  value={this.state.email}
+                  placeholder="e-mail address"
+                  onChange={this._handleChange('email')}
+                >
+                </input>
+
+                <input
+                  type="password"
+                  value={this.state.password}
+                  placeholder="password"
+                  onChange={this._handleChange('password')}
+                >
+                </input>
 
                 <button className="login-btn" type="submit">Login</button>
               </form>
+
         </div>
       </>
     )
   }
 }
-
-
-export default Login;

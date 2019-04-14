@@ -7,7 +7,6 @@ import Login from './containers/Login/Login';
 import Register from './containers/Register/Register';
 import List from './containers/List/List';
 import Navigation from './components/Navigation/Navigation';
-import users from './db/users';
 import TvDetails from './components/TV/TvDetails/TvDetails';
 import TvForm from './components/TV/TvForm/TvForm';
 
@@ -15,9 +14,12 @@ import * as apiCalls from './api/api';
 class App extends Component {
 
   state = {
-    users,
-    tvs: [],
+    authLoading: false,
     isAuthenticated: true,
+    userId: '',
+    error: '',
+    token: '',
+    tvs: [],
   }
 
   componentWillMount() {
@@ -63,14 +65,67 @@ class App extends Component {
 
   }
 
-  changeAuthStatus = (isAuthenticated) => {
+  loginHandler = loginCredentials => {
 
     this.setState({
       ...this.state,
-      isAuthenticated
+      authLoading: true,
     });
 
-  }
+    fetch('api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginCredentials)
+    })
+      .then( res => {
+        if (res.status === 422) {
+          throw new Error('Validation failed.');
+        }
+        if (res.status !== 200 && res.status !== 201) {
+          console.error('Error!');
+          throw new Error('Could not authenticate!');
+        }
+        return res.json();
+      })
+      .then(({token, userId}) => {
+
+        this.setState({
+          ...this.state,
+          token,
+          userId,
+          isAuthenticated: true,
+          authLoading: false,
+        });
+
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', userId);
+
+        const remainingMilliseconds = 60 * 60 * 1000;
+
+        const expiryDate = new Date(
+          new Date().getTime() + remainingMilliseconds
+        );
+
+        localStorage.setItem('expiryDate', expiryDate.toISOString());
+
+        // TODO: implement
+        // this.setAutoLogout(remainingMilliseconds);
+
+      })
+      .catch(err => {
+        console.error(err);
+
+        this.setState({
+          ...this.state,
+          isAuthenticated: false,
+          authLoading: false,
+          error: err
+        });
+
+      });
+  };
 
   addUser = async (userDetails) => {
 
@@ -97,7 +152,13 @@ class App extends Component {
           </header>
 
         <Switch>
-          <Route path="/login" exact component={ () => <Login loginStatus={this.changeAuthStatus} users={this.state.users} /> } />
+
+          <Route
+            path="/login"
+            exact
+            component={ () => <Login login={this.loginHandler} /> }
+          />
+
           <Route path="/register" exact component={ () => <Register addUser={this.addUser} /> } />
 
           {
