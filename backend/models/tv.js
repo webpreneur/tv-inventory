@@ -22,7 +22,7 @@ const tvSchema = new mongoose.Schema({
     }
 });
 
-const TV = mongoose.model('TV', tvSchema);
+const TV = mongoose.model('TV', tvSchema, 'tvs');
 
 module.exports = TV;
 

@@ -1,13 +1,13 @@
 require('dotenv').config();
 
-const express = require('express'),
+const
+    express = require('express'),
     cors = require('cors'),
     app = express(),
     port = process.env.PORT || 8080,
-    bodyParser = require('body-parser');
-
-const tvRoutes = require('./routes/tvs');
-
+    bodyParser = require('body-parser'),
+    tvRoutes = require('./routes/tvs'),
+    userRoutes = require('./routes/users');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -20,5 +20,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/tvs', tvRoutes);
+app.use('/api/users', userRoutes);
 
 app.listen(port, () => console.info('CORS-enabled web server listening on port ' + port));

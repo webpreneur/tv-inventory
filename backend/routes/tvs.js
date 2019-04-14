@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const {
-    getTVs, createTV, getTV, updateTV, deleteTV
+    getTVs,
+    createTV,
+    getTV,
+    updateTV,
+    deleteTV
 } = require('../helpers/tvs');
 
 router.route('/')

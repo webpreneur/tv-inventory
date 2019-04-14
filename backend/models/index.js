@@ -9,3 +9,4 @@ mongoose.connect(
 mongoose.Promise = Promise;
 
 module.exports.TV = require("./tv");
+module.exports.User = require("./user");
