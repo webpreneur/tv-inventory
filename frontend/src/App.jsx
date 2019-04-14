@@ -8,9 +8,10 @@ import Register from './containers/Register/Register';
 import List from './containers/List/List';
 import Navigation from './components/Navigation/Navigation';
 import users from './db/users';
-import apiUrls from './api/api-urls';
 import TvDetails from './components/TV/TvDetails/TvDetails';
+import TvForm from './components/TV/TvForm/TvForm';
 
+import * as apiCalls from './api/api';
 class App extends Component {
 
   state = {
@@ -20,32 +21,49 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.loadTVs();
+    this._loadTVs();
   }
 
-  loadTVs() {
-    fetch(apiUrls.tvApi)
-      .then( response => {
-        if(!response.ok) {
-          if ( response.status >= 400 && response.status < 500 ) {
-            return response.json()
-              .then(data => {
-                let err = {errorMessage: data.message};
-                throw err;
-              })
-          } else {
-            let err = {errorMessage: 'please try again later, server is not responding'};
-            throw err;
-          }
-        }
-        return response.json();
-      })
-      .then( tvs => {
-        this.setState({
-          ...this.state,
-          tvs
-        });
-      });
+  async _loadTVs() {
+
+    let tvs = await apiCalls.getTvs();
+
+    this.setState({
+      ...this.state,
+      tvs
+    });
+
+  }
+
+  addTv = async (tvData) => {
+
+    const newTV = await apiCalls.createTv(tvData);
+
+    this.setState({
+      ...this.state,
+      tvs: [
+        ...this.state.tvs,
+        newTV,
+      ]
+    });
+
+  }
+
+  deleteTv = (id, redirectCallback) => async () => {
+
+    await apiCalls.removeTv(id);
+
+    const newTvs = this.state.tvs.filter( tv => tv._id !== id );
+
+    console.log(this.state.tvs);
+    console.log(newTvs);
+
+    this.setState({
+        tvs: newTvs,
+    });
+
+    redirectCallback();
+
   }
 
   changeAuthStatus = (isAuthenticated) => {
@@ -93,8 +111,17 @@ class App extends Component {
           {
             this.state.isAuthenticated ?
             <Route
+              path="/televisions/new"
+              render={ (props) => <TvForm addTv={this.addTv} /> }
+              exact
+            /> :
+            <Redirect to="/login"/>
+          }
+          {
+            this.state.isAuthenticated ?
+            <Route
               path="/televisions/:id"
-              render={ (props) => <TvDetails {...props} /> }
+              render={ (props) => <TvDetails {...props} deleteTv={this.deleteTv} tvs={this.state.tvs} /> }
               exact
             /> :
             <Redirect to="/login"/>

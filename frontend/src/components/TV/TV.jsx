@@ -10,7 +10,6 @@ const TV = ({
   displayType,
   resolutionK,
   outputs,
-  onDelete,
 }) => {
 
   const outputsList = outputs.map(
@@ -30,7 +29,6 @@ const TV = ({
       <span>{ displayType }</span>
       <span>{ resolutionK }</span>
       <span>{ outputsList }</span>
-      <span onClick={onDelete}> X </span>
     </div>
 
   )

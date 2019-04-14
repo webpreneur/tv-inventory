@@ -41,58 +41,63 @@ export default class TvForm extends Component {
 
     render() {
         return (
-            <section>
+            <>
+                <header>
+                    Add a new TV
+                </header>
+                <section>
 
-                <input
-                    type="text"
-                    value={ this.state.name }
-                    placeholder="Name..."
-                    onChange={ this.handleChange('name') }
-                />
+                    <input
+                        type="text"
+                        value={ this.state.name }
+                        placeholder="Name..."
+                        onChange={ this.handleChange('name') }
+                    />
 
-                <input
-                    type="text"
-                    value={ this.state.itemNo }
-                    placeholder="SKU..."
-                    onChange={ this.handleChange('itemNo') }
-                />
+                    <input
+                        type="text"
+                        value={ this.state.itemNo }
+                        placeholder="SKU..."
+                        onChange={ this.handleChange('itemNo') }
+                    />
 
-                <input
-                    type="number"
-                    value={ this.state.displaySizeInInches === null ? '' : this.state.displaySizeInInches }
-                    placeholder="Size..."
-                    onChange={ this.handleChange('displaySizeInInches') }
-                />
+                    <input
+                        type="number"
+                        value={ this.state.displaySizeInInches === null ? '' : this.state.displaySizeInInches }
+                        placeholder="Size..."
+                        onChange={ this.handleChange('displaySizeInInches') }
+                    />
 
-                <input
-                    type="text"
-                    value={ this.state.displayType }
-                    placeholder="Type..."
-                    onChange={ this.handleChange('displayType') }
-                />
+                    <input
+                        type="text"
+                        value={ this.state.displayType }
+                        placeholder="Type..."
+                        onChange={ this.handleChange('displayType') }
+                    />
 
-                <input
-                    type="number"
-                    value={ this.state.resolutionK === null ? '' : this.state.resolutionK }
-                    placeholder="Resolution..."
-                    onChange={ this.handleChange('resolutionK') }
-                />
+                    <input
+                        type="number"
+                        value={ this.state.resolutionK === null ? '' : this.state.resolutionK }
+                        placeholder="Resolution..."
+                        onChange={ this.handleChange('resolutionK') }
+                    />
 
-                <input
-                    type="text"
-                    value={ this.state.outputs.join(';') }
-                    placeholder="Outputs, seperated by semicolons..."
-                    onChange={ this.handleChange('outputs') }
-                />
+                    <input
+                        type="text"
+                        value={ this.state.outputs.join(';') }
+                        placeholder="Outputs, seperated by semicolons..."
+                        onChange={ this.handleChange('outputs') }
+                    />
 
-                <button
-                    onClick={ this.handleSubmit }
-                >
-                    Hozzáadás
-                </button>
+                    <button
+                        onClick={ this.handleSubmit }
+                    >
+                        Hozzáadás
+                    </button>
 
-                <button>Mégse</button>
-            </section>
+                    <button>Mégse</button>
+                </section>
+            </>
         )
     }
 

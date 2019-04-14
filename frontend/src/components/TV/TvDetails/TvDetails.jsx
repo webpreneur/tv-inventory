@@ -1,35 +1,29 @@
 import React, { Component } from 'react';
-import apiUrls from '../../../api/api-urls';
 import { withRouter } from "react-router";
+import * as apiCalls from '../../../api/api';
 
 class TvDetails extends Component {
 
-    state = {};
+    state = {
+        tvs: this.props.tvs,
+    };
 
     componentWillMount() {
         this.loadTv();
     }
 
-    loadTv() {
-        fetch(`${apiUrls.tvApi}${this.props.match.params.id}`)
-            .then( response => {
-                if(!response.ok) {
-                if ( response.status >= 400 && response.status < 500 ) {
-                    return response.json()
-                    .then(data => {
-                        let err = {errorMessage: data.message};
-                        throw err;
-                    })
-                } else {
-                    let err = {errorMessage: 'please try again later, server is not responding'};
-                    throw err;
-                }
-                }
-                return response.json();
-            })
-            .then( tv => {
-                this.setState(tv);
-            });
+    redirectToTvs = () => {
+        this.props.history.push('/televisions');
+    }
+
+    async loadTv() {
+
+        const tv = await apiCalls.getTv(this.props.match.params.id)
+
+        this.setState({
+            ...tv,
+        });
+
     }
 
     render() {
@@ -37,17 +31,39 @@ class TvDetails extends Component {
         let result = [];
 
         for (const key in this.state) {
-            result.push(`${key}: ${this.state[key]}`);
+
+            if ( !['_id', '__v', 'tvs'].includes(key) ) {
+
+                result.push(`${key}: ${this.state[key]}`);
+
+            }
+
         }
 
-        const mySpan = document.createElement('span');
-        mySpan.innerText = 'próba';
-
         return (
+
             <>
                 <h2>TV Details</h2>
-                {result.map( text => <p>{text}</p>)}
+
+                {result.map( (text, i) => <p key={`${this.state._id}_${i}`} >{text}</p>)}
+
+                <button
+                    style={{
+                        background: 'salmon',
+                        border: 'none',
+                        padding: '20px',
+                        fontSize: '1.2rem',
+                        borderRadius: '5px',
+                        fontWeight: 'bold',
+                        color: 'white',
+                        cursor: 'pointer'
+                    }}
+                    onClick={this.props.deleteTv(this.state._id, this.redirectToTvs)}
+                >
+                    Delete TV
+                </button>
             </>
+
         );
     }
 

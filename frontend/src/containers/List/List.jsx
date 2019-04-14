@@ -5,8 +5,6 @@ import TV from '../../components/TV/TV';
 import NameFilter from '../../components/Filter/NameFilter/NameFilter';
 import NumberFilter from '../../components/Filter/NumberFilter/NumberFilter';
 import CheckBoxFilter from '../../components/Filter/CheckBoxFilter/CheckBoxFilter';
-import TvForm from '../../components/TV/TvForm/TvForm';
-import apiUrls from '../../api/api-urls';
 
 export default class List extends Component {
 
@@ -117,8 +115,6 @@ export default class List extends Component {
 
     let filteredTVs = [...this.state.tvs];
 
-    console.log({activeFilters});
-
     activeFilters.forEach(({
       filterLabel: label,
       filterValue: value,
@@ -175,75 +171,6 @@ export default class List extends Component {
     const isFilterActive = ( filterValue && !isArray ) || ( isArray && filterValue.length > 0 );
 
     return isFilterActive;
-  }
-
-  addTv = (tvData) => {
-
-    fetch(apiUrls.tvApi, {
-      method: 'post',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-      body: JSON.stringify(tvData)
-    })
-      .then( response => {
-        if(!response.ok) {
-          if ( response.status >= 400 && response.status < 500 ) {
-            return response.json()
-              .then(data => {
-                let err = {errorMessage: data.message};
-                throw err;
-              })
-          } else {
-            let err = {errorMessage: 'please try again later, server is not responding'};
-            throw err;
-          }
-        }
-        return response.json();
-      })
-      .then( newTV => {
-        this.setState({
-          ...this.state,
-          tvs: [
-            ...this.state.tvs,
-            newTV,
-          ]
-        });
-      });
-  }
-
-  deleteTv = (id) => () => {
-    const deleteURL = `${apiUrls.tvApi}${id}`;
-
-    fetch(deleteURL, {
-      method: 'DELETE'
-    })
-      .then( response => {
-        if(!response.ok) {
-          if ( response.status >= 400 && response.status < 500 ) {
-            return response.json()
-              .then(data => {
-                let err = {errorMessage: data.message};
-                throw err;
-              })
-          } else {
-            let err = {errorMessage: 'please try again later, server is not responding'};
-            throw err;
-          }
-        }
-        return;
-      })
-      .then( () => {
-
-        const newTvs = this.state.tvs.filter( tv => tv._id !== id );
-
-        this.setState({
-          ...this.state,
-          tvs: newTvs,
-        });
-
-      });
-
   }
 
   render() {
@@ -309,11 +236,9 @@ export default class List extends Component {
 
 
         <main>
-          <p>Add new TV:</p>
-          <TvForm addTv={ this.addTv } />
           {
             displayedTVs.map( tv => (
-                <TV key={tv._id} { ...tv } onDelete={this.deleteTv(tv._id)} />
+                <TV key={tv._id} { ...tv } />
               )
             )
           }

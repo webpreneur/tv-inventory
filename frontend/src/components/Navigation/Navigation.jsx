@@ -18,8 +18,8 @@ clickHandler = (pathname) => {
     if (this.state.pathname !== "/") {
       signedInOptions = (
         <>
-          <li><NavLink onClick={ () => {this.clickHandler("televisions")}} to="/televisions">List</NavLink></li>
-          <li><NavLink onClick={ () => {this.clickHandler("new")}} to="/new">Add new one</NavLink></li>
+          <li><NavLink onClick={ () => {this.clickHandler("televisions")}} to="/televisions" exact>List</NavLink></li>
+          <li><NavLink onClick={ () => {this.clickHandler("new")}} to="televisions/new" exact>Add new one</NavLink></li>
           <li><NavLink onClick={ () => {this.props.handleLogout(false)}} to="/logout">Logout</NavLink></li>
         </>
       )
