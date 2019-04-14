@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator/check');
+
 const db = require('../models');
 
 exports.getTVs = (req, res) => {
@@ -7,6 +9,16 @@ exports.getTVs = (req, res) => {
 }
 
 exports.createTV = (req, res) => {
+
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()) {
+        return res.status(422).json({
+            message: 'Validation failed, entered data is incorrect.',
+            errors: errors.array()
+        })
+    }
+
     db.TV.create(req.body)
         .then((newTV) => res.status(201).json(newTV))
         .catch((err) => res.send(err));
