@@ -3,9 +3,15 @@ const APIURLS = {
     USER: '/api/users/',
 }
 
+const headers = {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+}
+
 export async function getTvs() {
 
-    return fetch(APIURLS.TV)
+    return fetch(APIURLS.TV, {
+        headers,
+    })
         .then( response => {
             if(!response.ok) {
                 if ( response.status >= 400 && response.status < 500 ) {
@@ -29,6 +35,7 @@ export async function createTv(tv) {
     return fetch(APIURLS.TV, {
         method: 'post',
         headers: new Headers({
+            ...headers,
             'Content-Type': 'application/json',
         }),
         body: JSON.stringify(tv)
@@ -53,7 +60,9 @@ export async function createTv(tv) {
 
 export async function getTv(id) {
 
-    return fetch(`${APIURLS.TV}${id}`)
+    return fetch(`${APIURLS.TV}${id}`, {
+        headers,
+    })
         .then( response => {
             if(!response.ok) {
                 if ( response.status >= 400 && response.status < 500 ) {
@@ -76,6 +85,7 @@ export async function removeTv(id) {
     const deleteURL = `${APIURLS.TV}${id}`;
 
     return fetch(deleteURL, {
+        headers,
         method: 'DELETE'
     })
         .then( response => {
@@ -100,6 +110,7 @@ export async function createUser(newUserData) {
     return fetch(APIURLS.USER, {
         method: 'post',
         headers: new Headers({
+            ...headers,
             'Content-Type': 'application/json',
         }),
         body: JSON.stringify(newUserData)

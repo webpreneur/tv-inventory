@@ -22,10 +22,6 @@ class App extends Component {
     tvs: [],
   }
 
-  componentWillMount() {
-    this._loadTVs();
-  }
-
   async _loadTVs() {
 
     let tvs = await apiCalls.getTvs();
@@ -109,6 +105,8 @@ class App extends Component {
         );
 
         localStorage.setItem('expiryDate', expiryDate.toISOString());
+
+        this._loadTVs();
 
         // TODO: implement
         // this.setAutoLogout(remainingMilliseconds);
