@@ -9,8 +9,9 @@ const {
     updateTV,
     deleteTV
 } = require('../helpers/tvs');
+const isAuth = require('../middleware/is-auth');
 
-router.route('/')
+router.route('/', isAuth)
     .get(getTVs)
     .post([
         body('displaySizeInInches')
@@ -33,7 +34,7 @@ router.route('/')
             .isLength({min: 1}),
     ], createTV)
 
-router.route('/:tvId')
+router.route('/:tvId', isAuth)
     .get(getTV)
     .put(updateTV)
     .delete(deleteTV)

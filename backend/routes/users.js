@@ -1,5 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator/check');
+const isAuth = require('../middleware/is-auth');
 
 const { User } = require('../models');
 
@@ -7,7 +8,7 @@ const router = express.Router();
 
 const { createUser } = require('../helpers/users');
 
-router.route('/')
+router.route('/', isAuth)
     .post([
         body('email')
             .isEmail()

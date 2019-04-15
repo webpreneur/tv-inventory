@@ -1,37 +1,50 @@
 const { validationResult } = require('express-validator/check');
 
-const db = require('../models');
+const { TV } = require('../models');
 
-exports.getTVs = (req, res) => {
-    db.TV.find()
-        .then((tvs) => res.json(tvs))
-        .catch((err) => res.send(err));
+exports.getTVs = async (req, res) => {
+
+    try {
+
+        const tvs = await TV.find();
+
+        res.status(200).json(tvs);
+
+    } catch (err) {
+
+        if ( !err.statusCode ) {
+            err.statusCode = 500;
+        }
+        next(err);
+
+    }
+
 }
 
 exports.createTV = (req, res) => {
 
     const errors = validationResult(req);
 
-    if(!errors.isEmpty()) {
+    if( !errors.isEmpty() ) {
         return res.status(422).json({
             message: 'Validation failed, entered data is incorrect.',
             errors: errors.array()
         })
     }
 
-    db.TV.create(req.body)
+    TV.create(req.body)
         .then((newTV) => res.status(201).json(newTV))
         .catch((err) => res.send(err));
 }
 
 exports.getTV = (req, res) => {
-    db.TV.findById(req.params.tvId)
+    TV.findById(req.params.tvId)
         .then((foundTV) => res.json(foundTV))
         .catch((err) => res.send(err));
 }
 
 exports.updateTV = (req, res) => {
-    db.TV.findOneAndUpdate(
+    TV.findOneAndUpdate(
         { _id: req.params.tvId },
         req.body,
         { new: true }
@@ -41,7 +54,7 @@ exports.updateTV = (req, res) => {
 }
 
 exports.deleteTV = (req, res) => {
-    db.TV.remove({_id: req.params.tvId})
+    TV.remove({_id: req.params.tvId})
         .then(() => res.json({message: 'We deleted it!'}))
         .catch((err) => res.send(err));
 }

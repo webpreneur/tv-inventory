@@ -3,12 +3,14 @@ const jwt = require('jsonwebtoken');
 
 const { User } = require('../models/');
 
+const secret = '$D_Jq*+zGufkpbYh&vc2A_ejh_&T3#w_*2acTJLgBx@kPGLLP2';
+
+exports.secret = secret;
+
 exports.postLogin = (req, res, next) => {
 
     const { email, password } = req.body;
     let loadedUser;
-
-    console.log(email);
 
     User.findOne({
         email: email
@@ -33,7 +35,7 @@ exports.postLogin = (req, res, next) => {
                     email: loadedUser.email,
                     userId: loadedUser._id.toString()
                 },
-                '$D_Jq*+zGufkpbYh&vc2A_ejh_&T3#w_*2acTJLgBx@kPGLLP2',
+                secret,
                 { expiresIn: '1h' }
             );
             res.status(200).json({ token, userId: loadedUser._id.toString() });
