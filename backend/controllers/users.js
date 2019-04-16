@@ -1,9 +1,9 @@
 const { validationResult } = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 
-const db = require('../models');
+const { User } = require('../models');
 
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
 
     const errors = validationResult(req);
 
@@ -16,22 +16,30 @@ exports.createUser = (req, res) => {
 
     const { email, password } = req.body;
 
-    bcrypt.hash(password, 12)
-        .then(hashedPw => {
-            db.User.create({
+    try {
+
+        const hashedPw = await bcrypt.hash(password, 12);
+
+        try {
+
+            const newUser = await User.create({
                 email,
                 password: hashedPw,
             })
-                .then( newUser => res.status(201).json(newUser))
-                .catch( err => res.send(err));
-        })
-        .catch(err => {
-            if ( !err.statusCode ) {
-                err.statusCode = 500;
-            }
-            next(err);
-        });
+            res.status(201).json(newUser);
 
+        } catch (err) {
+            res.send(err);
+        }
+
+    } catch(err) {
+
+        if ( !err.statusCode ) {
+            err.statusCode = 500;
+        }
+        next(err);
+
+    }
 
 }
 

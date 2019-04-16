@@ -6,7 +6,7 @@ const { User } = require('../models');
 
 const router = express.Router();
 
-const { createUser } = require('../helpers/users');
+const { createUser } = require('../controllers/users');
 
 router.route('/', isAuth)
     .post([

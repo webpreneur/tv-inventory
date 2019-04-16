@@ -8,7 +8,7 @@ const {
     getTV,
     updateTV,
     deleteTV
-} = require('../helpers/tvs');
+} = require('../controllers/tvs');
 const isAuth = require('../middleware/is-auth');
 
 router.route('/', isAuth)
