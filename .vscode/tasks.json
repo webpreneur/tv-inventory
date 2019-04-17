@@ -16,6 +16,20 @@
             "script": "start",
             "path": "backend/",
             "problemMatcher": []
+        },
+        {
+            "label": "Test Server Side Logic",
+            "type": "npm",
+            "script": "test",
+            "path": "backend/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Test Server Side Logic with Coverage",
+            "type": "npm",
+            "script": "test-with-coverage",
+            "path": "backend/",
+            "problemMatcher": []
         }
     ]
 }

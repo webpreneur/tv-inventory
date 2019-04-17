@@ -1,0 +1,3 @@
+# testing
+/.nyc_output
+/test/mocha.env.js

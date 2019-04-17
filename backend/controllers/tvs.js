@@ -21,7 +21,7 @@ exports.getTVs = async (req, res) => {
 
 }
 
-exports.createTV = (req, res) => {
+exports.createTV = async (req, res) => {
 
     const errors = validationResult(req);
 
@@ -32,15 +32,32 @@ exports.createTV = (req, res) => {
         })
     }
 
-    TV.create(req.body)
-        .then((newTV) => res.status(201).json(newTV))
-        .catch((err) => res.send(err));
+    try {
+
+        const newTV = await TV.create(req.body);
+        res.status(201).json(newTV);
+        return newTV;
+
+    } catch (err) {
+        res.send(err);
+    }
 }
 
-exports.getTV = (req, res) => {
-    TV.findById(req.params.tvId)
-        .then((foundTV) => res.json(foundTV))
-        .catch((err) => res.send(err));
+exports.getTV = async (req, res) => {
+    try {
+        const foundTV = await TV.findById(req.params.tvId);
+        if( !foundTV ) {
+            const error = new Error('TV not found.');
+            error.statusCode = 404;
+            throw error;
+        }
+        res.status(200).json(foundTV);
+    } catch (err) {
+        if ( !err.statusCode ) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
 }
 
 exports.updateTV = (req, res) => {
