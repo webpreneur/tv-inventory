@@ -33,6 +33,18 @@ describe('Auth middleware', function() {
         expect(authMiddleware.bind(this, req, {}, () => {})).to.throw();
     });
 
+    it('should throw an error if decodedToken is falsy', function() {
+        const req = {
+            get: function() {
+                return 'Bearer fpiopqergjtzjkku';
+            }
+        };
+        sinon.stub(jwt, 'verify')
+        jwt.verify.returns(null);
+        expect(authMiddleware.bind(this, req, {}, () => {})).to.throw();
+        jwt.verify.restore();
+    });
+
     it('should yield a userId after decoding the token', function() {
         const req = {
             get: function() {

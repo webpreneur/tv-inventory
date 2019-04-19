@@ -67,13 +67,27 @@ exports.login = async (req, res, next) => {
 }
 
 exports.logout = (req, res, next) => {
-    req.session.destroy( err => {
+
+    const result = {};
+
+    const destroyCallback = function(result, err) {
+
         if (err) {
             console.error(err);
+            const error = new Error('Unsuccessful logout');
+            error.details = err;
+            throw error;
         } else {
-            res.send(JSON.stringify({status: 'logged out'}))
+            result.status = 'logged out';
+            res.send(JSON.stringify({status: 'logged out'}));
         }
-    });
+    }
+
+    req.session.destroy(
+        destroyCallback.bind(this, result)
+    );
+
+    return Promise.resolve(result);
 }
 
 module.exports = exports;

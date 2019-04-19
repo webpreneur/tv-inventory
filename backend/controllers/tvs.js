@@ -2,13 +2,14 @@ const { validationResult } = require('express-validator/check');
 
 const { TV } = require('../models');
 
-exports.getTVs = async (req, res) => {
+exports.getTVs = async (req, res, next) => {
 
     try {
 
         const tvs = await TV.find();
 
         res.status(200).json(tvs);
+        return tvs;
 
     } catch (err) {
 
@@ -43,37 +44,71 @@ exports.createTV = async (req, res) => {
     }
 }
 
-exports.getTV = async (req, res) => {
+exports.getTV = async (req, res, next) => {
+
     try {
+
         const foundTV = await TV.findById(req.params.tvId);
+
         if( !foundTV ) {
             const error = new Error('TV not found.');
             error.statusCode = 404;
             throw error;
         }
         res.status(200).json(foundTV);
+        return foundTV;
+
     } catch (err) {
+
         if ( !err.statusCode ) {
             err.statusCode = 500;
         }
+
         next(err);
     }
+
 }
 
-exports.updateTV = (req, res) => {
-    TV.findOneAndUpdate(
-        { _id: req.params.tvId },
-        req.body,
-        { new: true }
-    )
-        .then((tv) => res.json(tv))
-        .catch((err) => res.send(err))
+exports.updateTV = async (req, res) => {
+
+    try {
+
+        const updatedTv = await TV.findOneAndUpdate(
+                        { _id: req.params.tvId },
+                        req.body,
+                        { new: true }
+                    );
+        res.json(updatedTv);
+        return updatedTv;
+
+    } catch (err) {
+
+        res.send(err);
+
+    }
+
 }
 
-exports.deleteTV = (req, res) => {
-    TV.remove({_id: req.params.tvId})
-        .then(() => res.json({message: 'We deleted it!'}))
-        .catch((err) => res.send(err));
+exports.deleteTV = async (req, res) => {
+
+    try {
+
+        await TV.remove({
+            _id: req.params.tvId,
+        });
+
+        res.json({
+            message: 'Successfully deleted TV.'
+        });
+
+        return true;
+
+    } catch(err) {
+
+        res.send(err);
+
+    }
+
 }
 
 module.exports = exports;

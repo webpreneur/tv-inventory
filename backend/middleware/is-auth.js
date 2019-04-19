@@ -6,8 +6,6 @@ module.exports = (req, res, next) => {
 
     const authHeader = req.get('Authorization');
 
-    console.log({authHeader});
-
     if ( !authHeader ) {
         const error = new Error('Not authenticated.');
         error.statusCode = 401;
@@ -15,8 +13,6 @@ module.exports = (req, res, next) => {
     }
 
     const token = authHeader.split(' ')[1];
-
-    console.log({token});
 
     let decodedToken;
 
@@ -27,7 +23,7 @@ module.exports = (req, res, next) => {
         throw err;
     }
 
-    if (!decodedToken) {
+    if ( !decodedToken ) {
         const error = new Error('Not authenticated.');
         error.statusCode = 401;
         throw error;

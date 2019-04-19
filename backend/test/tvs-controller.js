@@ -1,7 +1,9 @@
 require('dotenv').config();
 
 const expect = require('chai').expect;
+const type = require('type-detect');
 const mongoose = require('mongoose');
+
 
 const {
     TV,
@@ -20,7 +22,7 @@ const {
     deleteTV
 } = require('../controllers/tvs');
 
-console.log(process.env.TEST_DB_URI);
+let createdTvsId = '';
 
 describe('TVs Controller', function() {
 
@@ -45,7 +47,8 @@ describe('TVs Controller', function() {
                 resolutionK: 4,
                 outputs: ['hdmi', 'vga'],
                 name: 'Visio 2019',
-                itemNo: 'jibbersishKU',
+                itemNo: 'jibberishKU',
+                _id: '5cb8b6531e5fd02d5cf33b03'
             }
         };
 
@@ -58,14 +61,123 @@ describe('TVs Controller', function() {
 
         createTV(req, res, () => {})
             .then(savedTv => {
-                console.log(savedTv);
-                expect(savedTv).to.have.property('displaySizeInInches');
-                expect(savedTv).to.have.property('displayType');
-                expect(savedTv).to.have.property('resolutionK');
+
+                createdTvsId = savedTv._id;
+
+                expect(savedTv).to.have.property('displaySizeInInches', 1);
+                expect(savedTv).to.have.property('displayType', 'led');
+                expect(savedTv).to.have.property('resolutionK', 4);
                 expect(savedTv).to.have.property('outputs');
-                expect(savedTv).to.have.property('name');
-                expect(savedTv).to.have.property('itemNo');
+                expect(savedTv).to.have.property('name', 'Visio 2019');
+                expect(savedTv).to.have.property('itemNo', 'jibberishKU');
                 expect(savedTv).to.have.property('_id');
+                done();
+            });
+
+    });
+
+    it('should return the tvs from the db', function(done) {
+
+        const res = {
+            status: function() {
+                return this;
+            },
+            json: function() {}
+        };
+
+        getTVs({}, res, () => {})
+            .then(tvs => {
+                console.log({ getTVs: tvs });
+                expect(tvs).to.be.an('array');
+                done();
+            });
+    });
+
+    it('should return a tv from the db', function(done) {
+
+        const req = {
+            params: {
+                tvId: createdTvsId,
+            }
+        };
+
+        const res = {
+            status: function() {
+                return this;
+            },
+            json: function() {}
+        };
+
+        getTV(req, res, () => {})
+            .then( foundTV => {
+                expect(foundTV).to.have.property('displaySizeInInches', 1);
+                expect(foundTV).to.have.property('displayType', 'led');
+                expect(foundTV).to.have.property('resolutionK', 4);
+                expect(foundTV).to.have.property('outputs');
+                expect(foundTV).to.have.property('name', 'Visio 2019');
+                expect(foundTV).to.have.property('itemNo', 'jibberishKU');
+                expect(foundTV).to.have.property('_id');
+                done();
+            });
+
+    });
+
+    it('should update a tv in the db', function(done) {
+
+        const req = {
+            params: {
+                tvId: createdTvsId,
+            },
+            body: {
+                displaySizeInInches: 2,
+                displayType: 'plazma',
+                resolutionK: 8,
+                outputs: ['hdmi', 'vga'],
+                name: 'Visio 2019',
+                itemNo: 'jibberishKU',
+                _id: '5cb8b6531e5fd02d5cf33b03'
+            }
+        };
+
+        const res = {
+            status: function() {
+                return this;
+            },
+            json: function() {}
+        };
+
+        updateTV(req, res, () => {})
+            .then( updatedTv => {
+                expect(updatedTv).to.have.property('displaySizeInInches', 2);
+                expect(updatedTv).to.have.property('displayType', 'plazma');
+                expect(updatedTv).to.have.property('resolutionK', 8);
+                expect(updatedTv).to.have.property('outputs');
+                expect(updatedTv).to.have.property('name', 'Visio 2019');
+                expect(updatedTv).to.have.property('itemNo', 'jibberishKU');
+                expect(updatedTv).to.have.property('_id');
+                done();
+            });
+
+    });
+
+    it('should delete a tv from the db', function(done) {
+
+        const req = {
+            params: {
+                tvId: createdTvsId,
+            }
+        };
+
+        const res = {
+            status: function() {
+                return this;
+            },
+            json: function() {}
+        };
+
+        deleteTV(req, res, () => {})
+            .then( (result) => {
+                expect(result).to.be.true;
                 done();
             });
 
