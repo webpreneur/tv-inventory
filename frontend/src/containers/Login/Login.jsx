@@ -1,6 +1,6 @@
 import React from 'react';
-
-export default class Login extends React.Component {
+import { withRouter } from 'react-router-dom';
+class Login extends React.Component {
 
   state = {
     email: "",
@@ -26,9 +26,12 @@ export default class Login extends React.Component {
 
     event.preventDefault();
 
-    this.props.login({
+    this.props.login(
+      {
       ...this.state
-    });
+      },
+      this.redirectToList
+    );
 
   }
 
@@ -40,6 +43,10 @@ export default class Login extends React.Component {
     ...this.state,
     [key]: value,
   })
+
+  redirectToList = () => {
+    this.props.history.push({pathname: '/televisions'});
+  }
 
   render() {
 
@@ -76,3 +83,5 @@ export default class Login extends React.Component {
     )
   }
 }
+
+export default withRouter(Login);

@@ -15,7 +15,7 @@ class App extends Component {
 
   state = {
     authLoading: false,
-    isAuthenticated: true,
+    isAuthenticated: false,
     userId: '',
     error: '',
     token: '',
@@ -61,7 +61,7 @@ class App extends Component {
 
   }
 
-  loginHandler = loginCredentials => {
+  loginHandler = (loginCredentials, navigateToList) => {
 
     this.setState({
       ...this.state,
@@ -108,6 +108,8 @@ class App extends Component {
 
         this._loadTVs();
 
+        navigateToList();
+
         // TODO: implement
         // this.setAutoLogout(remainingMilliseconds);
 
@@ -143,13 +145,15 @@ class App extends Component {
       <BrowserRouter>
 
         <div className="App">
-          <Navigation handleLogout={this.changeAuthStatus} />
+          <Navigation isAuthenticated={this.state.isAuthenticated} handleLogout={this.changeAuthStatus} />
 
           <header className="App-header">
             { window.location.pathname !== 'list' ? <img src={logo} className="App-logo" alt="logo" /> : null}
           </header>
 
         <Switch>
+
+        <Route path="/" exact render={() => <h1>TV Inventory</h1>} />
 
           <Route
             path="/login"
@@ -186,7 +190,7 @@ class App extends Component {
             /> :
             <Redirect to="/login"/>
           }
-
+          <Route render={() => <h1>404 Not found</h1>} />
         </Switch>
 
         </div>
