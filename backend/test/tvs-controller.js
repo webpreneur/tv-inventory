@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 const expect = require('chai').expect;
-const type = require('type-detect');
 const mongoose = require('mongoose');
 
 
@@ -87,7 +86,6 @@ describe('TVs Controller', function() {
 
         getTVs({}, res, () => {})
             .then(tvs => {
-                console.log({ getTVs: tvs });
                 expect(tvs).to.be.an('array');
                 done();
             });

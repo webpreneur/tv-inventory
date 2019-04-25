@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator/check');
 
-const { TV } = require('../models');
+const {
+    TV,
+} = require('../models');
 
 exports.getTVs = async (req, res, next) => {
 
@@ -22,7 +24,7 @@ exports.getTVs = async (req, res, next) => {
 
 }
 
-exports.createTV = async (req, res) => {
+exports.createTV = async (req, res, next) => {
 
     const errors = validationResult(req);
 
@@ -69,7 +71,7 @@ exports.getTV = async (req, res, next) => {
 
 }
 
-exports.updateTV = async (req, res) => {
+exports.updateTV = async (req, res, next) => {
 
     try {
 
@@ -89,7 +91,7 @@ exports.updateTV = async (req, res) => {
 
 }
 
-exports.deleteTV = async (req, res) => {
+exports.deleteTV = async (req, res, next) => {
 
     try {
 
